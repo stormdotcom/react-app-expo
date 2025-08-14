@@ -13,8 +13,12 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#007AFF"
+      },
+      "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "pan",
+      "allowBackup": true,
+      "package": "com.todoapp.todo"
     },
     "web": {
       "bundler": "metro",

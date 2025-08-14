@@ -1,75 +1,194 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  Alert,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+interface TodoItem {
+  id: string;
+  text: string;
+  completed: boolean;
+}
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+export default function TodoScreen() {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [inputText, setInputText] = useState('');
+
+  const addTodo = () => {
+    if (inputText.trim().length === 0) {
+      Alert.alert('Error', 'Please enter a todo item');
+      return;
+    }
+
+    const newTodo: TodoItem = {
+      id: Date.now().toString(),
+      text: inputText.trim(),
+      completed: false,
+    };
+
+    setTodos([...todos, newTodo]);
+    setInputText('');
+  };
+
+  const toggleTodo = (id: string) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  const deleteTodo = (id: string) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const renderTodoItem = ({ item }: { item: TodoItem }) => (
+    <View style={styles.todoItem}>
+      <TouchableOpacity
+        style={styles.todoContent}
+        onPress={() => toggleTodo(item.id)}>
+        <Ionicons
+          name={item.completed ? 'checkmark-circle' : 'ellipse-outline'}
+          size={24}
+          color={item.completed ? '#4CAF50' : '#666'}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <Text
+          style={[
+            styles.todoText,
+            item.completed && styles.completedTodoText,
+          ]}>
+          {item.text}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => deleteTodo(item.id)}>
+        <Ionicons name="trash-outline" size={20} color="#FF6B6B" />
+      </TouchableOpacity>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Todo List</Text>
+      
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="Add a new todo..."
+          placeholderTextColor="#999"
+          onSubmitEditing={addTodo}
+        />
+        <TouchableOpacity style={styles.addButton} onPress={addTodo}>
+          <Ionicons name="add" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={todos}
+        renderItem={renderTodoItem}
+        keyExtractor={(item) => item.id}
+        style={styles.todoList}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+    paddingTop: 60,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  addButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#007AFF',
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  todoList: {
+    flex: 1,
+  },
+  todoItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  todoContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  todoText: {
+    fontSize: 16,
+    color: '#333',
+    marginLeft: 15,
+    flex: 1,
+  },
+  completedTodoText: {
+    textDecorationLine: 'line-through',
+    color: '#999',
+  },
+  deleteButton: {
+    padding: 5,
   },
 });

@@ -1,50 +1,60 @@
-# Welcome to your Expo app 👋
+# Todo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple and clean todo application built with React Native and Expo.
 
-## Get started
+## Features
 
-1. Install dependencies
+- ✅ Add new todos
+- ✅ Mark todos as complete/incomplete
+- ✅ Delete todos
+- ✅ Clean, modern UI
+- ✅ Cross-platform (iOS, Android, Web)
 
+## Tech Stack
+
+- **Frontend**: React Native 0.79.5
+- **Navigation**: Expo Router
+- **Icons**: Expo Vector Icons
+- **Language**: TypeScript
+- **Platform**: Expo SDK 53
+
+## Getting Started
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. Start the development server:
    ```bash
-   npx expo start
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+3. Run on your preferred platform:
+   - **iOS**: `npm run ios`
+   - **Android**: `npm run android`
+   - **Web**: `npm run web`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/
+├── _layout.tsx          # Root layout
+├── (tabs)/
+│   ├── _layout.tsx      # Tab navigation
+│   ├── index.tsx        # Todo list screen
+│   └── explore.tsx      # Settings screen
+└── +not-found.tsx       # 404 page
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Development
 
-## Learn more
+The app follows a clean, minimal structure with:
+- File-based routing using Expo Router
+- Tab-based navigation
+- Modern React Native patterns
+- TypeScript for type safety
 
-To learn more about developing your project with Expo, look at the following resources:
+## License
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+MIT

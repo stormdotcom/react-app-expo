@@ -8,14 +8,12 @@ import {
   StyleSheet,
   Alert,
   Animated,
-  Dimensions,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 interface TodoItem {
   id: string;
@@ -24,8 +22,6 @@ interface TodoItem {
   priority: 'low' | 'medium' | 'high';
   createdAt: Date;
 }
-
-const { width: screenWidth } = Dimensions.get('window');
 
 export default function TodoScreen() {
   const insets = useSafeAreaInsets();

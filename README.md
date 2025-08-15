@@ -1,17 +1,9 @@
 # Todo App - Modern Task Management
 
-A modern, feature-rich todo application built with React Native and Expo, specifically optimized for Android devices with Material Design principles.
+A modern, feature-rich todo application built with React Native
 
-## ✨ Features
+![Todo App Screenshot](todo.jpeg)
 
-- ✅ **Smart Task Management**: Add, complete, and delete tasks with priority levels
-- 🎯 **Priority System**: High, Medium, and Low priority indicators
-- 📱 **Modern Android UI**: Material Design with edge-to-edge support
-- 🔔 **Haptic Feedback**: Tactile responses for better user experience
-- 📊 **Progress Tracking**: Visual progress bar showing completion status
-- 🎨 **Beautiful Design**: Clean, modern interface with smooth animations
-- 📱 **Cross-Platform**: Works on iOS, Android, and Web
-- ⌨️ **Keyboard Optimized**: Smart keyboard handling for Android devices
 
 ## 🚀 Tech Stack
 
